@@ -7,7 +7,6 @@ const GenreNav = () => {
   const [gernes, setGenres] = useState([]);
   async function getGenresApi() {
     const res = await api.get("/genres");
-    console.log(res.data);
     setGenres(res.data);
   }
   function renderGenres() {

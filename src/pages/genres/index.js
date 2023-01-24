@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import GenreNav from "../../components/genreNav";
 import api from "../../helpers/api";
 import GenreMoviesList from "../../components/genreMoviesList";
 import GenrePageStyle from "./style";
-import { Outlet } from "react-router-dom";
 const GenrePage = () => {
   const [genres, setGenres] = useState([]);
   async function getGenresApi() {
@@ -13,12 +11,10 @@ const GenrePage = () => {
   function genresRender() {
     return genres.map((genreItem) => {
       return (
-        <>
-          <GenrePageStyle key={genreItem.id}>
-            <h1>{genreItem.name}</h1>
-            <GenreMoviesList genreId={genreItem.id} />
-          </GenrePageStyle>
-        </>
+        <GenrePageStyle key={genreItem.id}>
+          <h1>{genreItem.name}</h1>
+          <GenreMoviesList genreId={genreItem.id} />
+        </GenrePageStyle>
       );
     });
   }
