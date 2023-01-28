@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../helpers/api";
 import GenreNavStyle from "./style";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
+import LoadingPage from "../../pages/loadingPage";
 
 const GenreNav = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [gernes, setGenres] = useState([]);
   async function getGenresApi() {
     const res = await api.get("/genres");
@@ -12,21 +14,31 @@ const GenreNav = () => {
   function renderGenres() {
     return gernes.map((item) => {
       return (
-        <Link className="nav-item" to="/" key={item.id}>
+        <Link
+          className="nav-item"
+          to={`/genres/${item.id}`}
+          key={item.id}
+          state={item.name}
+        >
           {item.name}
         </Link>
       );
     });
   }
   useEffect(() => {
+    setIsLoading(true);
     getGenresApi();
+    setIsLoading(false);
   }, []);
   return (
     <>
-      <GenreNavStyle>{renderGenres()}</GenreNavStyle>
-      <div>
-        <Outlet />
-      </div>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <GenreNavStyle>
+          <div className="genre-wrapper">{renderGenres()}</div>
+        </GenreNavStyle>
+      )}
     </>
   );
 };

@@ -21,11 +21,7 @@ const GenrePage = () => {
   useEffect(() => {
     getGenresApi();
   }, []);
-  return (
-    <>
-      <div>{genresRender()}</div>
-    </>
-  );
+  return <div>{genresRender()}</div>;
 };
 
 export default GenrePage;

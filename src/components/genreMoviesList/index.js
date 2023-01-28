@@ -1,44 +1,46 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../../helpers/api";
+import MovieListStyle from "../movieList/style";
 import { charDots } from "../../helpers/charDots";
-import GenreMoviesListStyle from "./style";
-const GenreMoviesList = ({ genreId }) => {
+import Style from "./style";
+import { genreFinder } from "../../helpers/genre";
+const GenreMoviesList = ({}) => {
   const [genreMovies, setGenreMovies] = useState([]);
-  async function getGenreMovieApi(id) {
-    const res = await api.get(`/genres/${id}/movies`, {
-      params: {
-        page: "1",
-      },
-    });
+  const { id } = useParams();
+  async function getMovieApi() {
+    const res = await api.get(`/genres/${id}/movies`);
     setGenreMovies(res.data.data);
   }
   useEffect(() => {
-    getGenreMovieApi(genreId);
+    getMovieApi();
   }, []);
-  function movieListRender() {
-    return genreMovies.map((movie) => {
-      const { id: movie_id, poster, title, year, genres, imdb_rating } = movie;
-      return (
-        <li key={movie_id}>
-          <Link to={`/movies/${movie_id}`}>
-            <div className="movie-data">
-              <img src={poster} alt={title.replaceAll(" ", "_")} />
-              <div className="container">
-                <div className="data">
-                  <p>Year : {year}</p>
-                  <p>Genres : {genres.join(" - ")}</p>
-                  <p>imdb : {imdb_rating}</p>
+  return (
+    <Style>
+      <h1>{genreFinder(id)}</h1>
+      <MovieListStyle>
+        {genreMovies.map((item) => {
+          const { id, poster, title, year, genres, imdb_rating } = item;
+          return (
+            <li key={id}>
+              <Link to={`/movies/${id}`}>
+                <div className="movie-data">
+                  <img src={poster} alt={title.replaceAll(" ", "_")} />
+                  <div className="container">
+                    <div className="data">
+                      <p>Year : {year}</p>
+                      <p>Genres : {genres.join(" - ")}</p>
+                      <p>imdb : {imdb_rating}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <h3>{charDots(title)}</h3>
-          </Link>
-        </li>
-      );
-    });
-  }
-
-  return <GenreMoviesListStyle>{movieListRender()}</GenreMoviesListStyle>;
+                <h3>{charDots(title)}</h3>
+              </Link>
+            </li>
+          );
+        })}
+      </MovieListStyle>
+    </Style>
+  );
 };
 export default GenreMoviesList;

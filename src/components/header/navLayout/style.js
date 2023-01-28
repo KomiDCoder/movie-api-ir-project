@@ -2,12 +2,16 @@ import styled from "styled-components";
 const NavLayoutStyle = styled.nav`
   display: flex;
   position: fixed;
-  align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: space-between;
   z-index: 2;
   width: 100%;
   background: #f3f3f3;
   font-size: 20px;
+  gap: 120px;
+  nav {
+    width: 30%;
+    display: flex;
+  }
   .nav-item {
     &.active {
       background: #008cba;

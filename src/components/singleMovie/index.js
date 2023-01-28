@@ -2,18 +2,30 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../helpers/api";
 import SingleMovieStyle from "./style";
+import NotFoundPage from "../../pages/notFoundPage";
+import LoadingPage from "../../pages/loadingPage";
 
 const SingleMovie = () => {
-  const [movieData, setMovieData] = useState([]);
+  const [movieData, setMovieData] = useState({});
+  const [apiError, setApiError] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { id } = useParams();
   async function getMovieApi() {
-    const res = await api.get(`http://moviesapi.ir/api/v1/movies/${id}`);
-    setMovieData(res.data);
+    await api
+      .get(`/movies/${id}`)
+      .then(function (response) {
+        setMovieData(response.data);
+      })
+      .catch(function () {
+        setApiError(false);
+      });
   }
   function renderimages(img, title) {
     if (img && typeof img == "object") {
-      return img.map((item) => {
-        return <img src={item} alt={title && title.replaceAll(" ", "_")} />;
+      return img.map((item, i) => {
+        return (
+          <img src={item} alt={title && title.replaceAll(" ", "_")} key={i} />
+        );
       });
     } else {
       return <img src={img} alt={title && title.replaceAll(" ", "_")} />;
@@ -40,7 +52,11 @@ const SingleMovie = () => {
     return (
       <SingleMovieStyle>
         <div className="movie-data">
-          <img src={poster} alt={title && title.replaceAll(" ", "_")} />
+          <img
+            className="poster"
+            src={poster}
+            alt={title && title.replaceAll(" ", "_")}
+          />
           <div className="data">
             <h1>{title}</h1>
             <p>country : {country}</p>
@@ -63,10 +79,14 @@ const SingleMovie = () => {
       </SingleMovieStyle>
     );
   }
-
+  function pageErrorHandle() {
+    return apiError ? <div>{renderMovieData()}</div> : <NotFoundPage />;
+  }
   useEffect(() => {
+    setIsLoading(true);
     getMovieApi();
+    setIsLoading(false);
   }, []);
-  return <div>{renderMovieData()}</div>;
+  return isLoading ? <LoadingPage /> : pageErrorHandle();
 };
 export default SingleMovie;

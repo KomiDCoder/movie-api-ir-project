@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import GenrePage from "./genres";
 import Header from "../components/header";
 import MainPage from "./mainPage";
 import MovieSinglePage from "./movieSinglePage";
 import GenreNav from "../components/genreNav";
 import NotFoundPage from "./notFoundPage";
+import GenreMoviesList from "../components/genreMoviesList";
 import LoadingPage from "./loadingPage";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,12 +19,6 @@ const router = createBrowserRouter([
       {
         path: "/genres",
         element: <GenreNav />,
-        children: [
-          {
-            index: true,
-            element: <GenrePage />,
-          },
-        ],
       },
 
       {
@@ -31,7 +26,11 @@ const router = createBrowserRouter([
         element: <MovieSinglePage />,
       },
       {
-        path: "genres/:mm",
+        path: "genres/:id",
+        element: <GenreMoviesList />,
+      },
+      {
+        path: "/test",
         element: <LoadingPage />,
       },
       {

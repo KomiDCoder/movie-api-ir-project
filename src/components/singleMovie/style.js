@@ -12,6 +12,10 @@ const SingleMovieStyle = styled.div`
   .movie-data {
     display: flex;
     width: 100%;
+    .poster {
+      width: 30%;
+      border-radius: 12px;
+    }
   }
   .data {
     display: flex;
@@ -31,12 +35,15 @@ const SingleMovieStyle = styled.div`
   }
   .movie-images {
     display: flex;
+    padding: 20px;
     flex-wrap: wrap;
     width: 100%;
     img {
+      border-radius: 18px;
       padding: 10px;
       width: 20%;
     }
   }
 `;
+
 export default SingleMovieStyle;

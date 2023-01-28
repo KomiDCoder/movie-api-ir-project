@@ -1,27 +1,34 @@
 import styled from "styled-components";
 const GenreNavStyle = styled.div`
   display: flex;
-  box-shadow: -2px -2px black;
-  flex-wrap: wrap;
-  z-index: 2;
-  width: 100%;
-  background: #f3f3f3;
+  margin: 0 auto;
+  padding-top: 100px;
+  width: 80%;
   font-size: 18px;
+  .genre-wrapper {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 0 10px;
+  }
   .nav-item {
+    background: #f3f3f3;
+    padding: 10px;
+    border-radius: 12px;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: center;
+    width: 30%;
+    padding: 22px;
+    color: black;
+    transition: all 0.3s ease-in;
     &.active {
       background: #008cba;
     }
-  }
-  a {
-    text-transform: capitalize;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 22px;
-    color: black;
     &:hover {
       background: #979797;
-      color: whitesmoke;
+      color: #fff;
       opacity: 0.8;
     }
   }

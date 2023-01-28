@@ -3,11 +3,8 @@ const NotFoundPage = () => {
   return (
     <NotFoundPageStyle>
       <div>
-        <h3>404 : that's an error</h3>
-        <p>
-          Your client does not have permission to get URL /fonts from this
-          server. That’s all we know.
-        </p>
+        <h3>404 : this Page is not Found</h3>
+        <p>not to worry , you can go to our main page</p>
       </div>
     </NotFoundPageStyle>
   );

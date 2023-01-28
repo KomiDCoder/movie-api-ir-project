@@ -5,4 +5,3 @@ export function charDots(string, charNumber = 24) {
     return string;
   }
 }
-// console.log(charDots("sddfdsfsdfdsfdsfdsfdfdcdfdff"));
